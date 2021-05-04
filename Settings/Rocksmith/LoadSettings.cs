@@ -71,9 +71,9 @@ namespace RSDiagnostics.Settings.Rocksmith
                     foreach (Settings setting in splitSettingsIntoSections[section])
                     {
                         if (setting.Value == null)
-                            sw.WriteLine(setting.SettingName + " = " + setting.DefaultValue);
+                            sw.WriteLine(setting.SettingName + "=" + setting.DefaultValue);
                         else
-                            sw.WriteLine(setting.SettingName + " = " + setting.Value);
+                            sw.WriteLine(setting.SettingName + "=" + setting.Value);
                     }
                 }
             }

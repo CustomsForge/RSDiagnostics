@@ -86,8 +86,8 @@ namespace RSDiagnostics.Settings.Rocksmith
                     if (line.Length == 0 || line[0] == '[') // Don't cache sections
                         continue;
 
-                    int equals = line.IndexOf(" = ");
-                    LoadSettings.SettingsFile_Cache.Add(line.Substring(0, equals), line.Substring(equals + " = ".Length));
+                    int equals = line.IndexOf("=");
+                    LoadSettings.SettingsFile_Cache.Add(line.Substring(0, equals), line.Substring(equals + "=".Length));
 
                     if (line.Substring(0, equals) == SettingName)
                         settingExistsInSettingsFile = true;
@@ -118,6 +118,6 @@ namespace RSDiagnostics.Settings.Rocksmith
             }
         }
 
-        public Settings WhereSettingName(string _SettingName) => LoadSettings.LoadedSettings.Where(setting => setting.SettingName == _SettingName).First();
+        public static Settings WhereSettingName(string _SettingName) => LoadSettings.LoadedSettings.Where(setting => setting.SettingName == _SettingName).First();
     }
 }
