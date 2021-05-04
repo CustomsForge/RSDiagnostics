@@ -20,6 +20,7 @@ namespace RSDiagnostics
             new Settings.Rocksmith.LoadSettings();
 
             new Log();
+            Environment.Exit(1);
         }
 
         public static bool ValidCdlcDLL()
