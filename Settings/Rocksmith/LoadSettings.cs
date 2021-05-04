@@ -9,8 +9,36 @@ namespace RSDiagnostics.Settings.Rocksmith
         {
             LoadedSettings.Clear();
 
-            LoadedSettings.Add(new Settings("Audio", "EnableMicrophone", 0));
+            // Audio
+            LoadedSettings.Add(new Settings("Audio", "EnableMicrophone", 1));
+            LoadedSettings.Add(new Settings("Audio", "ExclusiveMode", 1));
+            LoadedSettings.Add(new Settings("Audio", "LatencyBuffer", 4));
+            LoadedSettings.Add(new Settings("Audio", "ForceDefaultPlaybackDevice", ""));
+            LoadedSettings.Add(new Settings("Audio", "ForceWDM", 0));
+            LoadedSettings.Add(new Settings("Audio", "ForceDirectXSink", 0));
+            LoadedSettings.Add(new Settings("Audio", "DumpAudioLog", 0));
+            LoadedSettings.Add(new Settings("Audio", "MaxOutputBufferSize", 0));
+            LoadedSettings.Add(new Settings("Audio", "RealToneCableOnly", 0));
+            LoadedSettings.Add(new Settings("Audio", "Win32UltraLowLatencyMode", 1));
 
+            // Renderer.Win32
+            LoadedSettings.Add(new Settings("Renderer.Win32", "ShowGamepadUI", 0));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "ScreenWidth", 0));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "ScreenHeight", 0));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "Fullscreen", 2));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "VisualQuality", 1));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "RenderingWidth", 0));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "RenderingHeight", 0));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "EnablePostEffects", 1));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "EnableShadows", 1));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "EnableHighResScope", 1));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "EnableDepthOfField", 1));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "EnablePerPixelLighting", 1));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "MsaaSamples", 4));
+            LoadedSettings.Add(new Settings("Renderer.Win32", "DisableBrowser", 0));
+
+            // Net
+            LoadedSettings.Add(new Settings("Net", "UseProxy", 1));
 
             WriteSettingsFile();
         }

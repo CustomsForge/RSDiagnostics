@@ -15,7 +15,7 @@ namespace RSDiagnostics
         {
             InitializeComponent();
 
-            MessageBox.Show(ValidCdlcDLL().ToString() + "\n" + DLLType.ToString());
+            //MessageBox.Show(ValidCdlcDLL().ToString() + "\n" + DLLType.ToString());
             new Settings.Rocksmith.LoadSettings();
         }
 

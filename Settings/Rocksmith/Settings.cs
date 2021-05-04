@@ -83,7 +83,7 @@ namespace RSDiagnostics.Settings.Rocksmith
                 bool settingExistsInSettingsFile = false;
                 foreach (string line in File.ReadAllLines(RSDiagnostics.Settings.Settings.SETTINGS_Rocksmith))
                 {
-                    if (line[0] == '[') // Don't cache sections
+                    if (line.Length == 0 || line[0] == '[') // Don't cache sections
                         continue;
 
                     int equals = line.IndexOf(" = ");
