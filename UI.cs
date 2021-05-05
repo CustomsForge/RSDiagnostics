@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
-using RSDiagnostics.Util;
 
 namespace RSDiagnostics
 {
@@ -18,6 +17,8 @@ namespace RSDiagnostics
 
             Settings.Settings.RefreshLocations();
             new Settings.Rocksmith.LoadSettings();
+
+            SongManager.ExtractSongData();
 
             new Log();
             Environment.Exit(1);
@@ -42,7 +43,7 @@ namespace RSDiagnostics
                     return false; // User is using an ACTUAL D3DX9_42.dll, not a CDLC hack.
                 }
             }
-            catch { } // This catch case is needed. We want an error to occur above.
+            catch { } // We want this function to error out. If it does, that means we have a non-Microsoft DLL.
 
 
             using (SHA256 sha256 = SHA256.Create())

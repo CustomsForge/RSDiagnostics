@@ -13,6 +13,7 @@ namespace RSDiagnostics.Settings
         public static void RefreshLocations()
         {
             RocksmithLocation = Util.GenUtil.GetRSDirectory();
+
             SETTINGS_Rocksmith = Path.Combine(RocksmithLocation, "Rocksmith.ini");
             CDLC_DLL = Path.Combine(RocksmithLocation, "D3DX9_42.dll");
         }
