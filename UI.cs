@@ -17,22 +17,27 @@ namespace RSDiagnostics
 
             Settings.Settings.RefreshLocations();
 
-            // Load Settings
+            // Load Rocksmith Settings
             new Settings.Rocksmith.LoadSettings();
-            new Settings.Asio.LoadSettings();
+
+            // Load RS_ASIO if we see it exists.
+            if (File.Exists(Settings.Settings.DLL_Asio_RSASIO) || File.Exists(Settings.Settings.DLL_Asio_AVRT))
+                new Settings.Asio.LoadSettings();
 
             // Get data from songs
             SongManager.ExtractSongData();
 
             // Dump to log
             new Log();
+
+            // Close GUI since it's unused (AS OF NOW)
             Environment.Exit(1);
         }
 
         public static bool ValidCdlcDLL()
         {
 
-            if (!File.Exists(Settings.Settings.CDLC_DLL))
+            if (!File.Exists(Settings.Settings.DLL_CDLC))
             {
                 DLLType = DLLType.None;
                 return false;
@@ -40,7 +45,7 @@ namespace RSDiagnostics
                 
             try
             {
-                X509Certificate2 cert = new X509Certificate2(X509Certificate.CreateFromSignedFile(Settings.Settings.CDLC_DLL));
+                X509Certificate2 cert = new X509Certificate2(X509Certificate.CreateFromSignedFile(Settings.Settings.DLL_CDLC));
 
                 if (cert.GetNameInfo(X509NameType.SimpleName, false) == "Microsoft Corporation" || cert.Verify())
                 {
@@ -53,7 +58,7 @@ namespace RSDiagnostics
 
             using (SHA256 sha256 = SHA256.Create())
             {
-                FileStream dllStream = File.Open(Settings.Settings.CDLC_DLL, FileMode.Open);
+                FileStream dllStream = File.Open(Settings.Settings.DLL_CDLC, FileMode.Open);
                 dllStream.Position = 0;
 
                 byte[] hash = sha256.ComputeHash(dllStream);
@@ -71,7 +76,7 @@ namespace RSDiagnostics
                 }
             }
 
-            if (File.GetCreationTime(Settings.Settings.CDLC_DLL) >= new DateTime(2020, 7, 1) && new FileInfo(Settings.Settings.CDLC_DLL).Length >= 300000)
+            if (File.GetCreationTime(Settings.Settings.DLL_CDLC) >= new DateTime(2020, 7, 1) && new FileInfo(Settings.Settings.DLL_CDLC).Length >= 300000)
             {
                 DLLType = DLLType.RSMods;
                 return true;
