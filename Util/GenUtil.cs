@@ -11,6 +11,13 @@ namespace RSDiagnostics.Util
 {
     public static class GenUtil
     {
+
+        /// <summary>
+        /// Convert a string to an decimal, if possible. If it's not possible, result to @default.
+        /// </summary>
+        /// <param name="s"> - String to parse to an decimal.</param>
+        /// <param name="default"> - Default value to use as a backup.</param>
+        /// <returns>"s" as an decimal, if possible, else default value.</returns>
         public static decimal StrToDecDef(string s, decimal @default)
         {
             if (decimal.TryParse(s, out decimal number))
@@ -18,6 +25,12 @@ namespace RSDiagnostics.Util
             return @default;
         }
 
+        /// <summary>
+        /// Convert a string to an int, if possible. If it's not possible, result to @default.
+        /// </summary>
+        /// <param name="s"> - String to parse to an int.</param>
+        /// <param name="default"> - Default value to use as a backup.</param>
+        /// <returns>"s" as an int, if possible, else default value.</returns>
         public static int StrToIntDef(string s, int @default)
         {
             if (int.TryParse(s, out int number))
@@ -25,11 +38,20 @@ namespace RSDiagnostics.Util
             return @default;
         }
 
-        public static bool IsDirectoryEmpty(string path)
-        {
-            return !Directory.EnumerateFileSystemEntries(path).Any();
-        }
+        /// <summary>
+        /// See if a folder has no files in it.
+        /// </summary>
+        /// <param name="path"> - Folder to check</param>
+        /// <returns>Is this folder empty?</returns>
+        public static bool IsDirectoryEmpty(string path) => !Directory.EnumerateFileSystemEntries(path).Any();
 
+        /// <summary>
+        /// Extract files embedded in the application. This can help remove the need for an installer.
+        /// </summary>
+        /// <param name="outputDir"></param>
+        /// <param name="resourceAssembly"></param>
+        /// <param name="resourceLocation"></param>
+        /// <param name="files"></param>
         public static void ExtractEmbeddedResource(string outputDir, Assembly resourceAssembly, string resourceLocation, string[] files)
         {
             if (!Directory.Exists(outputDir))
@@ -45,6 +67,11 @@ namespace RSDiagnostics.Util
             }
         }
 
+        /// <summary>
+        /// Gets the default browser for the user.
+        /// </summary>
+        /// <param name="url"> - URL to pass to edge if needed.</param>
+        /// <returns>Name of browser executable</returns>
         public static string GetDefaultBrowser(string url)
         {
             string browserName = "iexplore.exe";
@@ -78,8 +105,15 @@ namespace RSDiagnostics.Util
             return browserName;
         }
 
-
-        public static T Map<T, TU>(this T target, TU source) // Copy properties of base class to its derived class 
+        /// <summary>
+        /// Copy properties of base class to a derived class
+        /// </summary>
+        /// <typeparam name="T"> - Derived Class</typeparam>
+        /// <typeparam name="TU"> - Base Class</typeparam>
+        /// <param name="target"> - Target</param>
+        /// <param name="source"> - Base / Source</param>
+        /// <returns>Target with properties from base class.</returns>
+        public static T Map<T, TU>(this T target, TU source)
         {
             var tprops = target.GetType().GetProperties();
 
@@ -96,6 +130,11 @@ namespace RSDiagnostics.Util
             return target;
         }
 
+        /// <summary>
+        /// Is this folder actually a Rocksmith folder, or did the user lie to us.
+        /// </summary>
+        /// <param name="folderPath"> - Path to Rocksmith</param>
+        /// <returns>Is this a real Rocksmith folder?</returns>
         private static bool IsRSFolder(this string folderPath)
         {
             if (!Directory.Exists(folderPath))
@@ -112,6 +151,12 @@ namespace RSDiagnostics.Util
             return true;
         }
 
+        /// <summary>
+        /// Return a string from the registry.
+        /// </summary>
+        /// <param name="keyName"> - Full registry path</param>
+        /// <param name="valueName"> - Name of value to look for</param>
+        /// <returns>Value as stored in registry, if it exist, and if it doesn't return string.Empty</returns>
         private static string GetStringValueFromRegistry(string keyName, string valueName)
         {
             try
@@ -121,9 +166,15 @@ namespace RSDiagnostics.Util
             }
             catch (Exception)
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
+
+        /// <summary>
+        /// Read Steam's libraryfolders.vdf file to find other "steamapps/" folders
+        /// </summary>
+        /// <param name="mainSteamPath"> - Steam install location</param>
+        /// <returns>List of "steamapps/" locations.</returns>
         private static List<string> GetCustomSteamappsFolders(string mainSteamPath)
         {
             string libRegex = "(^\\t\"[1-9]\").*(\".*\")";
@@ -154,7 +205,11 @@ namespace RSDiagnostics.Util
             return libDirs;
         }
 
-
+        /// <summary>
+        /// Try to find Rocksmith in a custom "steamapps/" folder.
+        /// </summary>
+        /// <param name="mainSteamPath"> - Steam install location</param>
+        /// <returns>Rocksmith folder, if found, and string.Empty if not.</returns>
         private static string GetCustomRSFolder(string mainSteamPath)
         {
             var customSteamppsFolders = GetCustomSteamappsFolders(mainSteamPath);
@@ -186,9 +241,13 @@ namespace RSDiagnostics.Util
             }
 
             // MessageBox.Show("<WARNING> Custom RS2014 Installation Directory not found ...");
-            return String.Empty;
+            return string.Empty;
         }
 
+        /// <summary>
+        /// Scan the registry for Steam's install location.
+        /// </summary>
+        /// <returns>Steam's install location</returns>
         public static string GetSteamDirectory()
         {
             const string steamRegPath = @"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam"; //IIRC it isn't the same on X86 machines, but do we really need to support those?
@@ -196,6 +255,9 @@ namespace RSDiagnostics.Util
             return GetStringValueFromRegistry(steamRegPath, "SteamPath").Replace('/', '\\');
         }
 
+        /// <summary>
+        /// List of keys that can be used to look for Rocksmith's install location.
+        /// </summary>
         public static List<Tuple<string, string>> InstallRegKeys = new List<Tuple<string, string>>()
         {
             new Tuple<string, string>(@"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Ubisoft\Rocksmith2014", "installdir"),
@@ -204,22 +266,31 @@ namespace RSDiagnostics.Util
             new Tuple<string, string>(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 221680", "InstallLocation")
         };
 
+        /// <summary>
+        /// Split Setting=Value into a Dictionary {Setting, Value}
+        /// </summary>
+        /// <param name="settingsLines"> - List of "Setting=Value"</param>
+        /// <returns>Dictionary of {Setting, Value}</returns>
         public static Dictionary<string, string> GetSettingsPairs(List<string> settingsLines)
         {
             var dictRet = new Dictionary<string, string>();
 
-            settingsLines.ForEach(line =>
-            {
-                string entry = line.Split('=')[0].Trim();
-                string value = line.Split('=')[1].Trim();
+            settingsLines.ForEach(line => 
+                {
+                    string entry = line.Split('=')[0].Trim();
+                    string value = line.Split('=')[1].Trim();
 
-                dictRet.Add(entry, value);
-            }
+                    dictRet.Add(entry, value);
+                }
             );
 
             return dictRet;
         }
 
+        /// <summary>
+        /// Try to find Rocksmith's install location
+        /// </summary>
+        /// <returns>Rocksmith's install location, if found, else string.Empty</returns>
         public static string GetRSDirectory()
         {
             try
@@ -244,8 +315,6 @@ namespace RSDiagnostics.Util
                                 break;
                             }
                         }
-
-
 
                         rs2RootDir = GetCustomRSFolder(steamRootPath); // Grab custom Steam library paths from .vdf file
 
@@ -279,9 +348,13 @@ namespace RSDiagnostics.Util
             return string.Empty;
         }
 
+        /// <summary>
+        /// Prompt user for their Rocksmith install location
+        /// </summary>
+        /// <returns>Rocksmith install location, if the folder is a Rocksmith folder, else string.Empty</returns>
         public static string AskUserForRSFolder()
         {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog()) // FolderBrowserDialog lacks usability, while using OpenFileDialog can be a bit wonky so this is likely the best solution
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
@@ -295,9 +368,13 @@ namespace RSDiagnostics.Util
             return string.Empty;
         }
 
+        /// <summary>
+        /// Try to find the user's Rocksmith profile folder.
+        /// </summary>
+        /// <returns>Rocksmith profile folder, if in it's default location, else string.Empty</returns>
         public static string GetSteamProfilesFolderManual()
         {
-            string steamUserdataPath = Path.Combine(GenUtil.GetSteamDirectory(), "userdata");
+            string steamUserdataPath = Path.Combine(GetSteamDirectory(), "userdata");
             try
             {
                 var subdirs = new DirectoryInfo(steamUserdataPath).GetDirectories(@"221680", SearchOption.AllDirectories).ToArray();

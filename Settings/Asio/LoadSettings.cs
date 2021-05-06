@@ -5,6 +5,10 @@ namespace RSDiagnostics.Settings.Asio
 {
     public class LoadSettings
     {
+
+        /// <summary>
+        /// Load RS_ASIO Settings
+        /// </summary>
         public LoadSettings()
         {
             LoadedSettings.Clear();
@@ -47,13 +51,23 @@ namespace RSDiagnostics.Settings.Asio
             LoadedSettings.Add(new Settings("Asio.Input.Mic", "EnableSoftwareMasterVolumeControl", 1));
             LoadedSettings.Add(new Settings("Asio.Input.Mic", "SoftwareMasterVolumePercent", 100));
 
-
             WriteSettingsFile();
         }
-
+        
+        /// <summary>
+        /// List of RS_ASIO Settings
+        /// </summary>
         public static List<Settings> LoadedSettings = new List<Settings>();
+
+        /// <summary>
+        /// Cache of RS_ASIO Settings.
+        /// </summary>
         public static Dictionary<string, Dictionary<string, object>> SettingsFile_Cache = new Dictionary<string, Dictionary<string, object>>();
 
+        /// <summary>
+        /// Create a new Settings File
+        /// </summary>
+        /// <param name="changedSettings"> - Setting adjusted, to be replaced in the settings file.</param>
         public static void WriteSettingsFile(Settings changedSettings = null)
         {
             using (StreamWriter sw = File.CreateText(RSDiagnostics.Settings.Settings.SETTINGS_Asio))

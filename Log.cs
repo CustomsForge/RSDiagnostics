@@ -16,6 +16,9 @@ namespace RSDiagnostics
             Songs();
         }
 
+        /// <summary>
+        /// Log very basic information on their version of Rocksmith to the outputFile.
+        /// </summary>
         void Init()
         {
             using (StreamWriter sw = File.CreateText(outputFile))
@@ -28,6 +31,9 @@ namespace RSDiagnostics
             }
         }
 
+        /// <summary>
+        /// Dump every Rocksmith.ini setting into the outputFile.
+        /// </summary>
         void DumpRocksmithINI()
         {
             using (StreamWriter sw = File.AppendText(outputFile))
@@ -48,6 +54,9 @@ namespace RSDiagnostics
             }
         }
 
+        /// <summary>
+        /// Dump every RS_ASIO.ini setting into the outputFile.
+        /// </summary>
         void DumpASIO()
         {
             using (StreamWriter sw = File.AppendText(outputFile))
@@ -68,6 +77,9 @@ namespace RSDiagnostics
             }
         }
 
+        /// <summary>
+        /// Log information about the user's songs to the outputFile.
+        /// </summary>
         void Songs()
         {
             List<SongData> ODLC = SongManager.Songs.Where(song => song.Value.ODLC == true && song.Value.RS1AppID == 0).Select(pair => pair.Value).ToList();

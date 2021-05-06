@@ -5,6 +5,9 @@ namespace RSDiagnostics.Settings.Rocksmith
 {
     class LoadSettings
     {
+        /// <summary>
+        /// Load Rocksmith Settings
+        /// </summary>
         public LoadSettings()
         {
             LoadedSettings.Clear();
@@ -43,10 +46,20 @@ namespace RSDiagnostics.Settings.Rocksmith
             WriteSettingsFile();
         }
 
+        /// <summary>
+        /// List of Settings
+        /// </summary>
         public static List<Settings> LoadedSettings = new List<Settings>();
 
+        /// <summary>
+        /// Cache of Settings.
+        /// </summary>
         public static Dictionary<string, object> SettingsFile_Cache = new Dictionary<string, object>();
 
+        /// <summary>
+        /// Create a new Settings File
+        /// </summary>
+        /// <param name="changedSettings"> - Setting adjusted, to be replaced in the settings file.</param>
         public static void WriteSettingsFile(Settings changedSettings = null)
         {
             using (StreamWriter sw = File.CreateText(RSDiagnostics.Settings.Settings.SETTINGS_Rocksmith))

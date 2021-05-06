@@ -117,6 +117,9 @@ namespace RSDiagnostics
     
     }
 
+    /// <summary>
+    /// D3DX9_42.dll types
+    /// </summary>
     public enum DLLType
     {
         CustomsForge,
