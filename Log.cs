@@ -23,7 +23,7 @@ namespace RSDiagnostics
                 sw.WriteLine("Rocksmith Location: " + Settings.Settings.RocksmithLocation);
                 sw.WriteLine("Valid CDLC DLL: " + MainForm.ValidCdlcDLL().ToString());
                 sw.WriteLine("DLL Type: " + MainForm.DLLType);
-                sw.WriteLine("Valid Game: " + MainForm.ValidGame().ToString());
+                sw.WriteLine("Valid Game: " + MainForm.ValidGame.ToString());
                 sw.WriteLine("\n");
             }
         }
