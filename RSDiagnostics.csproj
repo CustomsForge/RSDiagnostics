@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Log.cs" />
+    <Compile Include="Settings\Asio\LoadSettings.cs" />
+    <Compile Include="Settings\Asio\Settings.cs" />
     <Compile Include="Settings\Rocksmith\LoadSettings.cs" />
     <Compile Include="Settings\Rocksmith\Settings.cs" />
     <Compile Include="Settings\Settings.cs" />

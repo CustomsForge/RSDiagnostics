@@ -8,6 +8,7 @@ namespace RSDiagnostics.Settings
 
         public static string SETTINGS_Rocksmith = string.Empty;
         public static string CDLC_DLL = string.Empty;
+        public static string SETTINGS_Asio = string.Empty;
 
         public static bool HasValidSettingsFile(string SettingsFile) => File.Exists(SettingsFile) && File.ReadAllText(SettingsFile).Length > 0;
         public static void RefreshLocations()
@@ -16,6 +17,7 @@ namespace RSDiagnostics.Settings
 
             SETTINGS_Rocksmith = Path.Combine(RocksmithLocation, "Rocksmith.ini");
             CDLC_DLL = Path.Combine(RocksmithLocation, "D3DX9_42.dll");
+            SETTINGS_Asio = Path.Combine(RocksmithLocation, "RS_ASIO.ini");
         }
     }
 }

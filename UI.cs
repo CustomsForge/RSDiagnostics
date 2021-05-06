@@ -16,10 +16,15 @@ namespace RSDiagnostics
             InitializeComponent();
 
             Settings.Settings.RefreshLocations();
-            new Settings.Rocksmith.LoadSettings();
 
+            // Load Settings
+            new Settings.Rocksmith.LoadSettings();
+            new Settings.Asio.LoadSettings();
+
+            // Get data from songs
             SongManager.ExtractSongData();
 
+            // Dump to log
             new Log();
             Environment.Exit(1);
         }

@@ -12,6 +12,7 @@ namespace RSDiagnostics
         {
             Init();
             DumpRocksmithINI();
+            DumpASIO();
             Songs();
         }
 
@@ -34,6 +35,26 @@ namespace RSDiagnostics
                 sw.WriteLine("Rocksmith.ini is as follows");
                 string section = string.Empty;
                 foreach(Settings.Rocksmith.Settings setting in Settings.Rocksmith.LoadSettings.LoadedSettings)
+                {
+                    if (setting.Section != section)
+                    {
+                        section = setting.Section;
+                        sw.WriteLine("  " + "[" + section + "]");
+                    }
+
+                    sw.WriteLine("  " + setting.SettingName + "=" + setting.Value);
+                }
+                sw.WriteLine("\n");
+            }
+        }
+
+        void DumpASIO()
+        {
+            using (StreamWriter sw = File.AppendText(outputFile))
+            {
+                sw.WriteLine("RS_ASIO.ini is as follows");
+                string section = string.Empty;
+                foreach (Settings.Asio.Settings setting in Settings.Asio.LoadSettings.LoadedSettings)
                 {
                     if (setting.Section != section)
                     {
