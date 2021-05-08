@@ -94,7 +94,6 @@ namespace RSDiagnostics
                 progressBar.Value = progressBar.Minimum;
             }
 
-            
             Songs = Songs.Where(song => song.Key != null).Distinct().ToDictionary(song => song.Key, song => song.Value); // Clear out duplicates, and any null values that got accidently set.
 
             return Songs;

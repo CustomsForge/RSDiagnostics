@@ -10,7 +10,7 @@
     <AssemblyName>RSDiagnostics</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -25,7 +25,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -35,7 +35,8 @@
   <ItemGroup>
     <Reference Include="Rocksmith2014PsarcLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Rocksmith2014PsarcLib.dll</HintPath>
+      <HintPath>Embed\Rocksmith2014PsarcLib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Log.cs" />
+    <Compile Include="Settings\Asio\Devices.cs" />
     <Compile Include="Settings\Asio\LoadSettings.cs" />
     <Compile Include="Settings\Asio\Settings.cs" />
+    <Compile Include="Settings\Asio\VerifySettings.cs" />
     <Compile Include="Settings\Rocksmith\LoadSettings.cs" />
     <Compile Include="Settings\Rocksmith\Settings.cs" />
     <Compile Include="Settings\Settings.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -86,13 +90,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <EmbeddedResource Include="Embed\BouncyCastle.Crypto.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Lib\BouncyCastle.Crypto.dll" />
-    <Content Include="Lib\Newtonsoft.Json.dll" />
-    <Content Include="Lib\Pfim.dll" />
-    <Content Include="Lib\Rocksmith2014PsarcLib.dll" />
+    <EmbeddedResource Include="Embed\Newtonsoft.Json.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Embed\Pfim.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Embed\Rocksmith2014PsarcLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

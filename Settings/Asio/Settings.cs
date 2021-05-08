@@ -158,6 +158,6 @@ namespace RSDiagnostics.Settings.Asio
         /// <param name="_Section"> - Section of the Settings File to find this Setting in</param>
         /// <param name="_SettingName"> - Name of the Setting in the settings file.</param>
         /// <returns>Instance of the Setting, if it exist.</returns>
-        public static Settings WhereSettingName(string _Section, string _SettingName) => LoadSettings.LoadedSettings.Where(setting => setting.SettingName == _SettingName && setting.Section == _Section).First();
+        public static List<Settings> Where(string _Section, string _SettingName) => LoadSettings.LoadedSettings.Where(setting => setting.SettingName == _SettingName && setting.Section == _Section).ToList();
     }
 }

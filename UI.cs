@@ -28,8 +28,11 @@ namespace RSDiagnostics
 
             // Load RS_ASIO if we see it exists.
             if (File.Exists(Settings.Settings.DLL_Asio_RSASIO) || File.Exists(Settings.Settings.DLL_Asio_AVRT))
+            {
                 new Settings.Asio.LoadSettings();
-
+                new Settings.Asio.VerifySettings();
+            }
+                
             // Get data from songs
             SongManager.ExtractSongData();
 
