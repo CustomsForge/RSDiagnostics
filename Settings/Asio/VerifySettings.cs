@@ -130,7 +130,7 @@ namespace RSDiagnostics.Settings.Asio
         {
             ManagementObjectCollection devices = new ManagementObjectSearcher("SELECT * FROM Win32_SoundDevice").Get();
 
-            Dictionary<string, string> potentialAsio4AllDevices = new Dictionary<string, string>() { { "Focusrite Usb Audio", "https://google.com" } };
+            Dictionary<string, string> potentialAsio4AllDevices = new Dictionary<string, string>() { { "BEHRINGER USB AUDIO", "https://www.youtube.com/watch?v=S3QHbhtknH8" } };
 
             string Asio4AllDevice = string.Empty;
 
