@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Windows.Forms;
@@ -12,7 +13,6 @@ namespace RSDiagnostics.Settings.Asio
             VerifyDevicesAreActualASIODevices();
             FixFocusriteBuffer();
             CheckWasapiState();
-            CheckForAsio4All();
         }
 
         void FixFocusriteBuffer()
@@ -82,7 +82,10 @@ namespace RSDiagnostics.Settings.Asio
             {
                 bool foundDevice = false;
 
-                foreach(Devices.DriverInfo driver in asioDevices)
+                if (device.Value.ToLower().Contains("asio4all"))
+                    WarnAboutASIO4All();
+
+                foreach (Devices.DriverInfo driver in asioDevices)
                 {
                     if (driver.deviceName == device.Value)
                     {
@@ -123,15 +126,39 @@ namespace RSDiagnostics.Settings.Asio
             }
         }
 
-        void CheckForAsio4All()
+        void WarnAboutASIO4All()
         {
             ManagementObjectCollection devices = new ManagementObjectSearcher("SELECT * FROM Win32_SoundDevice").Get();
 
-            List<string> wasapiDevices = new List<string>();
+            Dictionary<string, string> potentialAsio4AllDevices = new Dictionary<string, string>() { { "Focusrite Usb Audio", "https://google.com" } };
+
+            string Asio4AllDevice = string.Empty;
 
             foreach (ManagementObject device in devices)
             {
-                wasapiDevices.Add(device.Properties["Name"].Value.ToString());
+                foreach(string potentialAsio4AllDevice in potentialAsio4AllDevices.Keys)
+                {
+                    if (potentialAsio4AllDevice == device.Properties["Name"].Value.ToString())
+                    {
+                        Asio4AllDevice = potentialAsio4AllDevice;
+                        break;
+                    }
+                }
+            }
+
+            if (Asio4AllDevice != string.Empty)
+            {
+                if (MessageBox.Show("We detected you are using ASIO4All.\n" +
+                                    "We suspect you are using it on your " + Asio4AllDevice + "\n" +
+                                    "There is a better way of utilizing this device in Rocksmith2014 that doesn't require ASIO4All.\n" +
+                                    "Press \"OK\" if you want to try the other way, or press \"Cancel\" if you want to continue using ASIO4All.",
+                                    "ASIO4All Conflict",
+                                    MessageBoxButtons.OKCancel,
+                                    MessageBoxIcon.Information)
+                    == DialogResult.OK)
+                {
+                    Process.Start(potentialAsio4AllDevices[Asio4AllDevice]);
+                }
             }
         }
     }

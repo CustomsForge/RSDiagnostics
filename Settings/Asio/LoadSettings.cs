@@ -93,7 +93,7 @@ namespace RSDiagnostics.Settings.Asio
 
                     foreach (Settings setting in splitSettingsIntoSections[section])
                     {
-                        if (section == "Asio" && pastedAsioComments == false)
+                        if (section == "Asio" && pastedAsioComments == false) // Just to make the RS_ASIO settings file look as "stock" as possible.
                         {
                             sw.WriteLine("; available buffer size modes:");
                             sw.WriteLine(";    driver - respect buffer size setting set in the driver");
@@ -101,7 +101,8 @@ namespace RSDiagnostics.Settings.Asio
                             sw.WriteLine(";    custom - use the buffer size specified in CustomBufferSize field");
                             pastedAsioComments = true;
                         }
-                        if (setting.Value == null)
+
+                        if (setting.Value == null) // If the setting doesn't exist, let's make it exist.
                             sw.WriteLine(setting.SettingName + "=" + setting.DefaultValue);
                         else
                             sw.WriteLine(setting.SettingName + "=" + setting.Value);
