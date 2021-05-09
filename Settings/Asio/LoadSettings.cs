@@ -89,8 +89,18 @@ namespace RSDiagnostics.Settings.Asio
                 {
                     sw.WriteLine("[" + section + "]");
 
+                    bool pastedAsioComments = false;
+
                     foreach (Settings setting in splitSettingsIntoSections[section])
                     {
+                        if (section == "Asio" && pastedAsioComments == false)
+                        {
+                            sw.WriteLine("; available buffer size modes:");
+                            sw.WriteLine(";    driver - respect buffer size setting set in the driver");
+                            sw.WriteLine(";    host   - use a buffer size as close as possible as that requested by the host application");
+                            sw.WriteLine(";    custom - use the buffer size specified in CustomBufferSize field");
+                            pastedAsioComments = true;
+                        }
                         if (setting.Value == null)
                             sw.WriteLine(setting.SettingName + "=" + setting.DefaultValue);
                         else
@@ -99,6 +109,5 @@ namespace RSDiagnostics.Settings.Asio
                 }
             }
         }
-
     }
 }
