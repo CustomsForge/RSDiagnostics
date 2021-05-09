@@ -7,6 +7,10 @@ namespace RSDiagnostics.Settings.Asio
 {
     public class Devices
     {
+        /// <summary>
+        /// Scans the user's registry for ASIO Devices
+        /// </summary>
+        /// <returns> A list of ASIO Devices</returns>
         public static List<DriverInfo> FindDevices()
         {
             List<DriverInfo> availableDevices = new List<DriverInfo>();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Windows.Forms;
 
 namespace RSDiagnostics.Settings.Asio
@@ -10,6 +11,8 @@ namespace RSDiagnostics.Settings.Asio
         {
             VerifyDevicesAreActualASIODevices();
             FixFocusriteBuffer();
+            CheckWasapiState();
+            CheckForAsio4All();
         }
 
         void FixFocusriteBuffer()
@@ -91,10 +94,44 @@ namespace RSDiagnostics.Settings.Asio
                 // Yeah, this ASIO device doesn't exist.
                 if (!foundDevice)
                     MessageBox.Show("We couldn't find the ASIO " + device.Key + " device you have set in RS_ASIO! " +
-                        "Please double check your drivers to make sure you are using the correct ASIO device!",
-                        "ASIO Device Not Found!",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
+                                    "Please double check your drivers to make sure you are using the correct ASIO device!",
+                                    "ASIO Device Not Found!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+            }
+        }
+
+        void CheckWasapiState()
+        {
+            Settings wasapiOuputSetting = Settings.Where("Config", "EnableWasapiOutputs").Count > 0 ? Settings.Where("Config", "EnableWasapiOutputs").First() : null;
+
+            if (MessageBox.Show("How are your headphones / speakers connected to your computer?\n" +
+                                "Press \"Yes\" if they are directly into your computer (via AUX, USB, etc)\n" +
+                                "Press \"No\" if they are connected to your audio interface.",
+                                "RS_ASIO Output Question",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question)
+                == DialogResult.Yes)
+            {
+                if (wasapiOuputSetting != null && (int)wasapiOuputSetting.Value != 1)
+                    wasapiOuputSetting.Value = 1;
+            }
+            else // DialogResult.No | Uses Interface
+            {
+                if (wasapiOuputSetting != null && (int)wasapiOuputSetting.Value != 0)
+                    wasapiOuputSetting.Value = 0;
+            }
+        }
+
+        void CheckForAsio4All()
+        {
+            ManagementObjectCollection devices = new ManagementObjectSearcher("SELECT * FROM Win32_SoundDevice").Get();
+
+            List<string> wasapiDevices = new List<string>();
+
+            foreach (ManagementObject device in devices)
+            {
+                wasapiDevices.Add(device.Properties["Name"].Value.ToString());
             }
         }
     }

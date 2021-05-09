@@ -33,13 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Rocksmith2014PsarcLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Embed\Rocksmith2014PsarcLib.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Rocksmith2014PsarcLib">
+      <HintPath>Resources\Rocksmith2014PsarcLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Log.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings\Asio\Devices.cs" />
     <Compile Include="Settings\Asio\LoadSettings.cs" />
     <Compile Include="Settings\Asio\Settings.cs" />
@@ -71,14 +75,9 @@
     <Compile Include="Util\GenUtil.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -90,16 +89,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Embed\BouncyCastle.Crypto.dll" />
+    <EmbeddedResource Include="Resources\BouncyCastle.Crypto.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Embed\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="Resources\Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Embed\Pfim.dll" />
+    <EmbeddedResource Include="Resources\Pfim.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Embed\Rocksmith2014PsarcLib.dll" />
+    <EmbeddedResource Include="Resources\Rocksmith2014PsarcLib.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

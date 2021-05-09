@@ -33,8 +33,8 @@ namespace RSDiagnostics
             ResourceManager rm = new ResourceManager(new object().GetType().Namespace + ".Properties.Resources", Assembly.GetExecutingAssembly());
 
             byte[] bytes = (byte[])rm.GetObject(dllName);
-
-            return Assembly.Load(bytes);
+            Assembly assembly = Assembly.Load(bytes);
+            return assembly;
         }
     }
 }
