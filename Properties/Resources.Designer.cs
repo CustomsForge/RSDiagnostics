@@ -59,45 +59,5 @@ namespace RSDiagnostics.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] BouncyCastle_Crypto {
-            get {
-                object obj = ResourceManager.GetObject("BouncyCastle_Crypto", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Newtonsoft_Json {
-            get {
-                object obj = ResourceManager.GetObject("Newtonsoft_Json", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Pfim {
-            get {
-                object obj = ResourceManager.GetObject("Pfim", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Rocksmith2014PsarcLib {
-            get {
-                object obj = ResourceManager.GetObject("Rocksmith2014PsarcLib", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
