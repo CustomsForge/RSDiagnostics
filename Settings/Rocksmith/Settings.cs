@@ -137,6 +137,6 @@ namespace RSDiagnostics.Settings.Rocksmith
         /// </summary>
         /// <param name="_SettingName"> - Name of the Setting in the settings file.</param>
         /// <returns>Instance of the Setting, if it exist.</returns>
-        public static Settings WhereSettingName(string _SettingName) => LoadSettings.LoadedSettings.Where(setting => setting.SettingName == _SettingName).First();
+        public static Settings Where(string _SettingName) => LoadSettings.LoadedSettings.Where(setting => setting.SettingName == _SettingName).First();
     }
 }

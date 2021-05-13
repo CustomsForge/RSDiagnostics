@@ -9,6 +9,7 @@ namespace RSDiagnostics.Settings
         // Standard Rocksmith Information
         public static string SETTINGS_Rocksmith = string.Empty; // Rocksmith.ini
         public static string DLL_CDLC = string.Empty; // D3DX9_42.dll
+        public static string EXE = string.Empty; // Rocksmith2014.exe
 
         // RS_ASIO
         public static string DLL_Asio_AVRT = string.Empty; // avrt.dll
@@ -32,6 +33,7 @@ namespace RSDiagnostics.Settings
             // Standard Rocksmith Information
             SETTINGS_Rocksmith = Path.Combine(RocksmithLocation, "Rocksmith.ini");
             DLL_CDLC = Path.Combine(RocksmithLocation, "D3DX9_42.dll");
+            EXE = Path.Combine(RocksmithLocation, "Rocksmith2014.exe");
 
             // RS_Asio
             DLL_Asio_AVRT = Path.Combine(RocksmithLocation, "avrt.dll");

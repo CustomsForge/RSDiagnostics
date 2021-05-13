@@ -11,6 +11,7 @@ namespace RSDiagnostics
         public Log()
         {
             Init();
+            CheckForRedFlags_RocksmithSettings();
             DumpRocksmithINI();
             DumpASIO();
             Songs();
@@ -27,7 +28,35 @@ namespace RSDiagnostics
                 sw.WriteLine("Valid CDLC DLL: " + MainForm.ValidCdlcDLL().ToString());
                 sw.WriteLine("DLL Type: " + MainForm.DLLType);
                 sw.WriteLine("Valid Game: " + MainForm.ValidGame.ToString());
-                sw.WriteLine("\n");
+
+                sw.WriteLine('\n');
+            }
+        }
+
+        /// <summary>
+        /// Look for common settings that can cause issues in Rocksmith's settings file.
+        /// </summary>
+        void CheckForRedFlags_RocksmithSettings()
+        {
+            using (StreamWriter sw = File.AppendText(outputFile))
+            {
+                sw.WriteLine("Potential Red Flags:");
+
+                if ((int)Settings.Rocksmith.Settings.Where("Win32UltraLowLatencyMode").Value == 0)
+                    sw.WriteLine("Win32UltraLowLatencyMode: OFF");
+
+                if ((int)Settings.Rocksmith.Settings.Where("ForceWDM").Value == 1)
+                    sw.WriteLine("ForceWDM: ON");
+
+                if ((int)Settings.Rocksmith.Settings.Where("ForceDirectXSink").Value == 1)
+                    sw.WriteLine("ForceDirectXSink: ON");
+
+                if ((int)Settings.Rocksmith.Settings.Where("DumpAudioLog").Value == 1)
+                    sw.WriteLine("DumpAudioLog: ON");
+
+                sw.WriteLine("End Potential Red Flags!");
+
+                sw.WriteLine('\n');
             }
         }
 
@@ -50,7 +79,8 @@ namespace RSDiagnostics
 
                     sw.WriteLine("  " + setting.SettingName + "=" + setting.Value);
                 }
-                sw.WriteLine("\n");
+
+                sw.WriteLine('\n');
             }
         }
 
@@ -73,7 +103,8 @@ namespace RSDiagnostics
 
                     sw.WriteLine("  " + setting.SettingName + "=" + setting.Value);
                 }
-                sw.WriteLine("\n");
+
+                sw.WriteLine('\n');
             }
         }
 
@@ -87,6 +118,8 @@ namespace RSDiagnostics
             {
                 sw.WriteLine("Total Songs: " + SongManager.Songs.Count);
                 sw.WriteLine("Non-Authentic ODLC: " + SongManager.Validate(ODLC));
+
+                sw.WriteLine('\n');
             }
         }
     }

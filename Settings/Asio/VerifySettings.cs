@@ -132,32 +132,25 @@ namespace RSDiagnostics.Settings.Asio
 
             Dictionary<string, string> potentialAsio4AllDevices = new Dictionary<string, string>() { { "BEHRINGER USB AUDIO", "https://www.youtube.com/watch?v=S3QHbhtknH8" } };
 
-            string Asio4AllDevice = string.Empty;
-
             foreach (ManagementObject device in devices)
             {
                 foreach(string potentialAsio4AllDevice in potentialAsio4AllDevices.Keys)
                 {
                     if (potentialAsio4AllDevice == device.Properties["Name"].Value.ToString())
                     {
-                        Asio4AllDevice = potentialAsio4AllDevice;
+                        if (MessageBox.Show("We detected you are using ASIO4All.\n" +
+                                            "We suspect you are using it on your " + potentialAsio4AllDevice + "\n" +
+                                            "There is a better way of utilizing this device in Rocksmith2014 that doesn't require ASIO4All.\n" +
+                                            "Press \"OK\" if you want to try the other way, or press \"Cancel\" if you want to continue using ASIO4All.",
+                                            "ASIO4All Conflict",
+                                            MessageBoxButtons.OKCancel,
+                                            MessageBoxIcon.Information)
+                            == DialogResult.OK)
+                        {
+                            Process.Start(potentialAsio4AllDevices[potentialAsio4AllDevice]);
+                        }
                         break;
                     }
-                }
-            }
-
-            if (Asio4AllDevice != string.Empty)
-            {
-                if (MessageBox.Show("We detected you are using ASIO4All.\n" +
-                                    "We suspect you are using it on your " + Asio4AllDevice + "\n" +
-                                    "There is a better way of utilizing this device in Rocksmith2014 that doesn't require ASIO4All.\n" +
-                                    "Press \"OK\" if you want to try the other way, or press \"Cancel\" if you want to continue using ASIO4All.",
-                                    "ASIO4All Conflict",
-                                    MessageBoxButtons.OKCancel,
-                                    MessageBoxIcon.Information)
-                    == DialogResult.OK)
-                {
-                    Process.Start(potentialAsio4AllDevices[Asio4AllDevice]);
                 }
             }
         }
