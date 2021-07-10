@@ -3,7 +3,10 @@ using System.IO;
 
 namespace RSDiagnostics.Settings.Rocksmith
 {
-    class LoadSettings
+    /// <summary>
+    /// Load, cache, and write all Rocksmith Settings
+    /// </summary>
+    public class LoadSettings
     {
         /// <summary>
         /// Load Rocksmith Settings
@@ -52,7 +55,7 @@ namespace RSDiagnostics.Settings.Rocksmith
         public static List<Settings> LoadedSettings = new List<Settings>();
 
         /// <summary>
-        /// Cache of Settings.
+        /// Cache of Settings File.
         /// </summary>
         public static Dictionary<string, object> SettingsFile_Cache = new Dictionary<string, object>();
 
@@ -66,7 +69,7 @@ namespace RSDiagnostics.Settings.Rocksmith
             {
                 Dictionary<string, List<Settings>> splitSettingsIntoSections = new Dictionary<string, List<Settings>>();
 
-                foreach (Settings setting in LoadedSettings)
+                foreach (Settings setting in LoadedSettings) // Force the settings into their respective sections.
                 {
                     if (splitSettingsIntoSections.ContainsKey(setting.Section))
                         splitSettingsIntoSections[setting.Section].Add(setting);
@@ -74,16 +77,16 @@ namespace RSDiagnostics.Settings.Rocksmith
                         splitSettingsIntoSections.Add(setting.Section, new List<Settings> { setting });
                 }
 
-                if (changedSettings != null)
+                if (changedSettings != null)  // If we want to change a setting before we write to the file, this will swap out the old setting for the inputted setting.
                     splitSettingsIntoSections[changedSettings.Section][splitSettingsIntoSections[changedSettings.Section].FindIndex(setting => setting.SettingName == changedSettings.SettingName)] = changedSettings;
 
                 foreach (string section in splitSettingsIntoSections.Keys)
                 {
-                    sw.WriteLine("[" + section + "]");
+                    sw.WriteLine("[" + section + "]"); // Write section name to Settings file to format as an INI Section.
 
                     foreach (Settings setting in splitSettingsIntoSections[section])
                     {
-                        if (setting.Value == null)
+                        if (setting.Value == null)  // If the setting doesn't exist, let's set it to the default mod value.
                             sw.WriteLine(setting.SettingName + "=" + setting.DefaultValue);
                         else
                             sw.WriteLine(setting.SettingName + "=" + setting.Value);

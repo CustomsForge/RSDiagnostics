@@ -10,23 +10,23 @@ namespace RSDiagnostics.Settings.Asio
         /// <summary>
         /// Scans the user's registry for ASIO Devices
         /// </summary>
-        /// <returns> A list of ASIO Devices</returns>
+        /// <returns>A list of ASIO Devices</returns>
         public static List<DriverInfo> FindDevices()
         {
             List<DriverInfo> availableDevices = new List<DriverInfo>();
 
             try
             {
-                RegistryKey registry_ASIO = Registry.LocalMachine.OpenSubKey("Software\\ASIO");
+                RegistryKey registry_ASIO = Registry.LocalMachine.OpenSubKey("Software\\ASIO"); // Open registry to "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\ASIO".
 
-                if (registry_ASIO == null)
+                if (registry_ASIO == null) // If we don't find the "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\ASIO" registry key
                     return availableDevices;
 
-                string[] subKeyNames = registry_ASIO.GetSubKeyNames();
+                string[] subKeyNames = registry_ASIO.GetSubKeyNames(); // Get a list of all the devices / sub-keys in the "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\ASIO" registry key.
 
                 foreach (string asioDevice in subKeyNames)
                 {
-                    // Setup variables
+                    // Setup variables to access registry values.
                     DriverInfo deviceInfo = new DriverInfo();
                     RegistryKey registry_device = Registry.LocalMachine.OpenSubKey($"Software\\ASIO\\{asioDevice}");
 

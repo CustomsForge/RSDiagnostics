@@ -8,6 +8,9 @@ namespace RSDiagnostics
     {
         readonly static string outputFile = "output.log";
 
+        /// <summary>
+        /// Create a log file to be easily sharable to volunteers to look over.
+        /// </summary>
         public Log()
         {
             Init();

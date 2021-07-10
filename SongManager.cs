@@ -105,7 +105,6 @@ namespace RSDiagnostics
         /// <returns> - Number of non-authentic official songs.</returns>
         public static int Validate(List<SongData> officialSongs)
         {
-            int nonAuthenticCount = 0;
 
             List<int> UniqueAppIds = new List<int>();
             Dictionary<int, List<string>> DLCPacks = new Dictionary<int, List<string>>();
@@ -124,7 +123,6 @@ namespace RSDiagnostics
                 {
                     if(!song.CommonName.ToLower().Contains("notetrackers")) // Every song with these IDs contains "notetrackers" in it's artist / title. If it doesn't, then it's pirated.
                     {
-                        nonAuthenticCount++;
                         nonAuthenticSongs.Add(song.CommonName);
                     }
                 }
@@ -142,7 +140,6 @@ namespace RSDiagnostics
                 {
                     if (UniqueAppIds.Contains(appID)) // Yeah, this is an ODLC with an AppID we've already scanned. This must be non-Authentic.
                     {
-                        nonAuthenticCount++;
                         nonAuthenticSongs.Add(song.CommonName);
                     }
                     else // We haven't seen this AppID yet.
@@ -157,13 +154,12 @@ namespace RSDiagnostics
                 {
                     foreach(string song in pack.Value)
                     {
-                        nonAuthenticCount++;
                         nonAuthenticSongs.Add(song);
                     }
                 }
             }
 
-            return nonAuthenticCount;
+            return nonAuthenticSongs.Count;
         }
     }
     

@@ -9,12 +9,12 @@ namespace RSDiagnostics.Settings.Rocksmith
     public class Settings
     {
         /// <summary>
-        /// Section that the setting is in.
+        /// INI Section that the setting is located in.
         /// </summary>
         public string Section { get; }
 
         /// <summary>
-        /// Name of setting in Rocksmith.ini
+        /// Name of setting in Rocksmith.ini    
         /// </summary>
         public string SettingName { get; }
 
